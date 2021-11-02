@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>이건 못 먹지 header</title>
+
+     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+     <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+
+    <style>
+     * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+    .header{
+        width: 1400px;
+        align-items: center;
+        margin: auto;
+        padding: 10px 10px 10px 10px;
+    }
+
+    .login-info {
+        padding-top: 20px;
+        text-align: right;
+    }
+    .login-info .img {
+        width: 80px;
+        text-align: left;
+    }
+    #idpw-input {
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        margin-right: 10px;
+    }
+    .btn {
+        height: 32px;
+        padding: 0px 5px 0px 5px;
+    }
+    .btn-primary {
+        background-color: green;
+        border: green;
+    }
+    .btn-info {
+        background-color: slategray;
+        border: slategray;
+    }
+    #login-btn {
+        margin-right: 10px;
+    }
+
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="login-info">
+        <img class="img" src="/img/broccoli-fruit-green-healthy-vegetable_107405.png">
+
+        <label class="label">ID: </label> <input class="input-box" id="idpw-input" placeholder=" ID를 입력해주세요">
+        <label class="label">PW: </label> <input class="input-box" id="idpw-input" placeholder=" PW를 입력해주세요">
+        <button type="button" class="btn btn-primary" id="login-btn">로그인</button>
+        <button type="button" class="btn btn-info">회원가입</button>
+    </div>
+
+</div>
+</body>
+</html>
