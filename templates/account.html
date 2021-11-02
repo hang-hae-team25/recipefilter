@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+                $("#headers").load("header.html");  //헤더 인클루드
+            }
+        );
+    </script>
+    <style>
+         .account-info{
+            margin: 20px;
+            display: flex;
+             justify-content: space-between;
+        }
+        .open-check-btn{
+            margin: 20px;
+        }
+        .excl-food-chebox {
+            float: left;
+            width: 20%;
+             display: flex;
+             justify-content: space-between;
+
+        }
+        .exclude-food-box{
+            display: block;
+            width: 90%;
+            margin: auto;
+        }
+        .account-btn{
+            width: 20%;
+            margin: 20px auto 10px auto;
+            display: block;
+        }
+        .title-h1{
+            text-align: center;
+        }
+        .main-container{
+            border: 1px solid black;
+            width: 70%;
+            margin: auto;
+        }
+
+    </style>
+    <script>
+
+       $(document).ready(function(){
+
+        openClose()
+
+       });
+
+    function openClose() {
+            if ($('#exclude-food-box').css('display') == 'block') {
+                $('#exclude-food-box').hide();
+                $('#open-check-btn').text('못 먹는 음식 선택');
+            } else {
+                $('#exclude-food-box').show();
+                $('#open-check-btn').text('못 먹는 음식 닫기');
+            }
+        }
+
+    </script>
+</head>
+<body>
+<!-- header file import -->
+<div id="headers"></div>
+<div class="main-container">
+    <h1 class="title-h1">회원가입</h1>
+    <div class="account-info">이름/닉네임 : <input type="text"/></div>
+    <div class="account-info">이메일 주소 : <input type="text"/></div>
+    <div class="account-info">PW :<input type="password"/></div>
+    <div class="account-info">PW 확인 : <input type="password"/></div>
+
+        <div>
+
+            <button onclick="openClose()" class="open-check-btn" id="open-check-btn">못 먹는 음식 선택</button>
+            <div id="exclude-food-box" class="exclude-food-box"/>
+                <div class="excl-food-chebox">소고기<input type="checkbox" value="소고기"/></div>
+                <div class="excl-food-chebox">돼지고기<input type="checkbox" value="돼지고기"/></div>
+                <div class="excl-food-chebox">닭고기<input type="checkbox" value="닭고기"/></div>
+                <div class="excl-food-chebox">육류<input type="checkbox" value="육류"/></div>
+                <div class="excl-food-chebox">채소류<input type="checkbox" value="채소류"/></div>
+                <div class="excl-food-chebox">해물류<input type="checkbox" value="해물류"/></div>
+                <div class="excl-food-chebox">달걀/유제품<input type="checkbox" value="달걀/유제품"/></div>
+                <div class="excl-food-chebox">가공식품류<input type="checkbox" value="가공식품류"/></div>
+                <div class="excl-food-chebox">쌀<input type="checkbox" value="쌀"/></div>
+                <div class="excl-food-chebox">밀가루<input type="checkbox" value="밀가루"/></div>
+                <div class="excl-food-chebox">건어물류<input type="checkbox" value="건어물류"/></div>
+                <div class="excl-food-chebox">버섯류<input type="checkbox" value="버섯류"/></div>
+                <div class="excl-food-chebox">과일류<input type="checkbox" value="과일류"/></div>
+                <div class="excl-food-chebox">콩/견과류<input type="checkbox" value="콩/견과류"/></div>
+                <div class="excl-food-chebox">곡류<input type="checkbox" value="곡류"/></div>
+
+            </div>
+
+            <button class="account-btn">가입하기</button>
+
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>
