@@ -23,6 +23,7 @@ def home():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
         return render_template('index.html')
+      
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -87,6 +88,7 @@ def check_dup():
     username_receive = request.form['username_give']
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
+
 
 @app.route('/recipes', methods=['GET'])
 def view_recipes():
