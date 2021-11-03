@@ -85,6 +85,23 @@
             text-align: center;
         }
 
+         .category-button {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .category-button .btn-info {
+            background-color: orange;
+            margin-right: 20px;
+        }
+
+        #lets-click {
+            display: block;
+            text-align: center;
+            font-size: x-large;
+            margin-bottom: 20px;
+        }
+
         .card-columns {
             width: 1400px;
         }
@@ -110,10 +127,21 @@
         <img class="main-logo" src="/static/logo-revised.png">
     </div>
 
-
     <div class="search-container">
+
         <input class="search_input" type="text" placeholder="Search">
-        <button type="button" class="btn btn-info">검색</button>
+        <button type="button" class="btn btn-info">재료검색</button>
+
+    </div>
+
+    <label id="lets-click">제외 원하는 재료를 클릭해 보세요!</label>
+
+    <div class="category-button">
+            <button type="button" class="btn btn-info">육류</button>
+            <button type="button" class="btn btn-info">해산물</button>
+            <button type="button" class="btn btn-info">채소</button>
+            <button type="button" class="btn btn-info">탄수화물</button>
+            <button type="button" class="btn btn-info">유제품</button>
     </div>
 
 
