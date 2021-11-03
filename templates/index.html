@@ -25,24 +25,16 @@
             showRecipes();
         });
 
-        function showRecipes() {
-            $.ajax({
-                type: "GET",
-                url: "/recipes",
-                data: {},
-                success: function (response) {
-                    alert("hi")
+        function showRecipesHelp(recipes) {
+             for (let i = 0; i < recipes.length; i++) {
+                 let title = recipes[i]['title']
+                 let hyperlink = recipes[i]['hyperlink']
+                 let image = recipes[i]['image']
+                 let description = recipes[i]['description']
+                 let ingredient = recipes[i]['ingredient']
+                 let category = recipes[i]['category']
 
-                    let recipes = response['recipes']
-                    for (let i = 0; i < recipes.length; i++) {
-                        let title = recipes[i]['title']
-                        let hyperlink = recipes[i]['hyperlink']
-                        let image = recipes[i]['image']
-                        let description = recipes[i]['description']
-                        let ingredient = recipes[i]['ingredient']
-                        let category = recipes[i]['category']
-
-                        let temp_html = ` <div class="card">
+                 let temp_html = ` <div class="card">
                                                 <img class="card-img-top"
                                                      src=${image}
                                                      alt="Card image cap">
@@ -55,8 +47,35 @@
                                                 </div>
                                             </div>`
 
-                        $('#cards-box').append(temp_html)
-                    }
+                 $('#cards-box').append(temp_html)
+             }
+        }
+
+        function showRecipes() {
+            $.ajax({
+                type: "GET",
+                url: "/recipes",
+                data: {},
+                success: function (response) {
+                    alert("hi")
+                    let recipes = response['recipes']
+                    showRecipesHelp(recipes)
+                }
+            })
+        }
+
+        function searchRecipes() {
+            let keyword = $('#search').val()
+            let apiUrl = "/search/" + keyword
+            $('#cards-box').empty()
+
+            $.ajax({
+                type: "POST",
+                url: apiUrl,
+                data: {keyword_give: keyword},
+                success: function (response) {
+                    let recipes = response['recipes']
+                    showRecipesHelp(recipes)
                 }
             })
         }
@@ -128,10 +147,8 @@
     </div>
 
     <div class="search-container">
-
-        <input class="search_input" type="text" placeholder="Search">
-        <button type="button" class="btn btn-info">재료검색</button>
-
+        <input class="search_input" id="search" type="text" placeholder="Search">
+        <button type="button" onclick="searchRecipes()" class="btn btn-info">재료 검색</button>
     </div>
 
     <label id="lets-click">제외 원하는 재료를 클릭해 보세요!</label>
