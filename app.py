@@ -22,7 +22,8 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
-        return render_template('main.html')
+        return render_template('index.html')
+      
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -87,6 +88,44 @@ def check_dup():
     username_receive = request.form['username_give']
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
+
+
+@app.route('/recipes', methods=['GET'])
+def view_recipes():
+    recipes = list(db.dbrecipefilter.find({}, {'_id': False}))
+    parsedRecipes = []
+    for i in range(0, len(recipes)):
+        output = {'title': recipes[i]['title'], 'hyperlink': recipes[i]['hyperlink'], 'image': recipes[i]['image']}
+        if 'description' in recipes[i]:
+            output['description'] = recipes[i]['description']
+        ingredients = []
+        category = []
+        for j in range(0, 5):
+            key = 'category' + str(j)
+            if key in recipes[i]:
+                category.append(recipes[i][key])
+        categorys = ''
+        for j in range(0, len(category)):
+            categorys += category[j] + ' '
+
+        ingreIndex = 1
+        while True:
+            key = 'ingredient' + str(ingreIndex)
+            if key in recipes[i]:
+                ingredients.append(recipes[i][key])
+            else:
+                break
+            ingreIndex += 1
+
+        allIngredients = ''
+        for j in range(0, len(ingredients)):
+            allIngredients += ingredients[j] + ' '
+
+        output['ingredient'] = allIngredients
+        output['category'] = categorys
+        parsedRecipes.append(output)
+
+    return jsonify({'recipes': parsedRecipes})
 
 
 if __name__ == '__main__':
