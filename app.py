@@ -6,7 +6,6 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 
-
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
@@ -23,7 +22,6 @@ def home():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
         return render_template('index.html')
-      
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -47,8 +45,8 @@ def sign_in():
 
     if result is not None:
         payload = {
-         'id': username_receive,
-         'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
+            'id': username_receive,
+            'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
 
@@ -90,10 +88,7 @@ def check_dup():
     return jsonify({'result': 'success', 'exists': exists})
 
 
-@app.route('/recipes', methods=['GET'])
-def view_recipes():
-    recipes = list(db.dbrecipefilter.find({}, {'_id': False}))
-    parsedRecipes = []
+def view_recipes_help(recipes, parsedRecipes):
     for i in range(0, len(recipes)):
         output = {'title': recipes[i]['title'], 'hyperlink': recipes[i]['hyperlink'], 'image': recipes[i]['image']}
         if 'description' in recipes[i]:
@@ -125,7 +120,33 @@ def view_recipes():
         output['category'] = categorys
         parsedRecipes.append(output)
 
+
+@app.route('/recipes', methods=['GET'])
+def view_recipes():
+    recipes = list(db.dbrecipefilter.find({}, {'_id': False}))
+    parsedRecipes = []
+    view_recipes_help(recipes, parsedRecipes)
     return jsonify({'recipes': parsedRecipes})
+
+
+@app.route('/search/<keyword>', methods=['POST'])
+def search_recipes(keyword):
+    recipes = list(db.dbrecipefilter.find({}, {'_id': False}))
+    searchedRecipe = []
+    parsedRecipe = []
+    for i in range(0, len(recipes)):
+        ingreIndex = 1
+        while True:
+            key = 'ingredient' + str(ingreIndex)
+            if key in recipes[i]:
+                if keyword in recipes[i][key] or recipes[i][key] in keyword:
+                    searchedRecipe.append(recipes[i])
+                break
+            else:
+                break
+            ingreIndex += 1
+    view_recipes_help(searchedRecipe, parsedRecipe)
+    return jsonify({'recipes': parsedRecipe})
 
 
 if __name__ == '__main__':
