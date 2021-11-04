@@ -93,6 +93,7 @@
                 openClose()
             });
 
+            // 못 먹는 음식 선택
             function openClose() {
                 if ($('#exclude-food-box').css('display') == 'block') {
                     $('#exclude-food-box').hide();
@@ -107,6 +108,8 @@
             // {% if msg %}
             //     alert("{{ msg }}")
             // {% endif %}
+
+            // 로그인
             function sign_in() {
                 let username = $("#input-username").val()
                 let password = $("#input-password").val()
@@ -145,6 +148,7 @@
                 });
             }
 
+            // 회원가입
             function sign_up() {
                 let username = $("#input-username").val()
                 let password = $("#input-password").val()
@@ -225,22 +229,9 @@
                 });
 
             }
-/*
-            function getCheckboxValue() {
-                var obj_length = document.getElementsByName("food-option").length
-                for (var i = 0; i < obj_length; i++) {
-                    if (document.getElementsByName("food-option")[i].checked == true) {
-                        console.log(document.getElementsByName("food-option")[i].value)
-                        let selected = document.getElementsByName("food-option")[i].value
-                        console.log('selected: ' + selected)
-                    }
-                }
-            }
-*/
 
 
-
-
+            // 회원가입 박스 오픈
             function toggle_sign_up() {
                 $("#sign-up-box").toggleClass("is-hidden")
                 $("#div-sign-in-or-up").toggleClass("is-hidden")
@@ -251,21 +242,19 @@
                 $("#sign-up-nickname").toggleClass("is-hidden")
             }
 
+            // 아이디 유효성검사
             function is_username(asValue) {
                 var regExp = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{2,10}$/;
                 return regExp.test(asValue);
             }
 
+            // 비밀번호 유효성검사
             function is_password(asValue) {
                 var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;
                 return regExp.test(asValue);
             }
 
-             function is_nickname(asValue) {
-                var regExp = /^([a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{1,10}$/;
-                return regExp.test(asValue);
-            }
-
+            // 중복체크
             function check_dup() {
                 let username = $("#input-username").val()
                 console.log(username)
