@@ -194,19 +194,17 @@ def mywish():
         return render_template('login.html')
 
 
-@app.route('/wishlistplus', methods=['POST'])
+@app.route('/wishlistplus', methods=['GET'])
 def wishplus():
     token_receive = request.cookies.get('mytoken')
     if token_receive is not None:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_id =payload["id"]
-        title_receive = request.form['title_give']
-        # title = request.args.get('title')
-        print(title_receive)
-        mywish_ing = list(db.myrecipe.find({'title': title_receive}, {'_id': False}))
+        title = request.args.get('title')
+        print(title)
+        mywish_ing = list(db.myrecipe.find({'title': title}, {'_id': False}))
         wishIdlist = []
         for ing in mywish_ing:
-
             wishIdlist.append(ing['user_id'])
 
         if mywish_ing:
@@ -215,12 +213,14 @@ def wishplus():
             else:
                 recipe = db.dbrecipefilter.find_one({'title': title}, {'_id': False})
                 recipe['user_id'] =user_id
+                #print(recipe)
                 db.myrecipe.insert_one(recipe)
                 flash("찜완료!")
         else:
             recipe = db.dbrecipefilter.find_one({'title': title}, {'_id': False})
             print(recipe)
             recipe['user_id'] = user_id
+            # print(recipe)
             db.myrecipe.insert_one(recipe)
             flash("찜완료!")
         return redirect("/")
