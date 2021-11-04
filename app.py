@@ -98,7 +98,7 @@ def view_recipes_help(filterKeyword, recipes, parsedRecipes):
         ingredients = []
         category = []
         for j in range(0, 5):
-            key = 'category' + str(j)
+            key = 'category' + str(j + 1)
             if key in recipes[i]:
                 category.append(recipes[i][key])
         categorys = ''
@@ -123,7 +123,6 @@ def view_recipes_help(filterKeyword, recipes, parsedRecipes):
         if len(filterKeyword) > 0:
             for keyword in filterKeyword:
                 if keyword in recipes[i]:
-                    print(keyword)
                     output['filter'] = 'Y'
                     break;
         parsedRecipes.append(output)
@@ -165,11 +164,11 @@ def search_recipes(keyword):
             if key in recipes[i]:
                 if keyword in recipes[i][key] or recipes[i][key] in keyword:
                     searchedRecipe.append(recipes[i])
-                break
+                    break
             else:
                 break
             ingreIndex += 1
-    view_recipes_help(searchedRecipe, parsedRecipe)
+    view_recipes_help([], searchedRecipe, parsedRecipe)
     return jsonify({'recipes': parsedRecipe})
 
 
