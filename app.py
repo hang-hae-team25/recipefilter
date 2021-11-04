@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 SECRET_KEY = 'SPARTA'
-app.secret_key =SECRET_KEY
+app.secret_key = SECRET_KEY
 client = MongoClient('localhost', 27017)
 db = client.dbrecipefilter
 
@@ -151,6 +151,7 @@ def search_recipes(keyword):
     view_recipes_help(searchedRecipe, parsedRecipe)
     return jsonify({'recipes': parsedRecipe})
 
+
 @app.route('/filter/<keyword>', methods=['POST'])
 def filter_recipes(keyword):
     # category_receive = request.form['category_give']
@@ -159,6 +160,7 @@ def filter_recipes(keyword):
     for recipe in recipes:
         if keyword in recipe:
             recipe['filter'] = 'Y'
+
     view_recipes_help(recipes, parsedRecipes)
 
     return jsonify({'recipes': parsedRecipes})
@@ -172,28 +174,30 @@ def mywish():
     else:
         return render_template('login.html')
 
+
 @app.route('/wishlistplus', methods=['GET'])
 def wishplus():
     token_receive = request.cookies.get('mytoken')
     title = request.args.get('title')
-    recipe = db.dbrecipefilter.find_one({'title': title},{'_id':False})
-    recipe['user']='user'
-    print(recipe)
+    recipe = db.dbrecipefilter.find_one({'title': title}, {'_id': False})
+    recipe['user'] = 'user'
 
     db.myrecipe.insert_one(recipe)
     flash("찜완료!")
     return redirect("/")
 
+
 @app.route('/wishlistminus', methods=['GET'])
 def wishminus():
     title = request.args.get('title')
-    db.myrecipe.delete_one({'title':title})
+    db.myrecipe.delete_one({'title': title})
     flash("찜삭제 완료!")
     return redirect("/wishlist")
 
+
 @app.route('/myrecipeview', methods=['GET'])
 def my_recipe_view():
-    recipes = list(db.myrecipe.find({'user':'user'}, {'_id': False}))
+    recipes = list(db.myrecipe.find({'user': 'user'}, {'_id': False}))
     parsedRecipes = []
     for i in range(0, len(recipes)):
         output = {'title': recipes[i]['title'], 'hyperlink': recipes[i]['hyperlink'], 'image': recipes[i]['image']}
@@ -227,6 +231,7 @@ def my_recipe_view():
         parsedRecipes.append(output)
 
     return jsonify({'recipes': parsedRecipes})
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
