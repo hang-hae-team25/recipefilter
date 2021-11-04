@@ -201,15 +201,26 @@ def wishplus():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_id =payload["id"]
         title = request.args.get('title')
-        mywish_ing =db.myrecipe.find_one({'title': title}, {'_id': False})
-        if not mywish_ing:
+        mywish_ing = list(db.myrecipe.find({'title': title}, {'_id': False}))
+        wishIdlist = []
+        for ing in mywish_ing:
+            wishIdlist.append(ing['user_id'])
+
+        if mywish_ing:
+            if user_id in wishIdlist:
+                flash("이미 추가된 레시피입니다.")
+            else:
+                recipe = db.dbrecipefilter.find_one({'title': title}, {'_id': False})
+                recipe['user_id'] =user_id
+                #print(recipe)
+                db.myrecipe.insert_one(recipe)
+                flash("찜완료!")
+        else:
             recipe = db.dbrecipefilter.find_one({'title': title}, {'_id': False})
-            recipe['user_id'] =user_id
-            #print(recipe)
+            recipe['user_id'] = user_id
+            # print(recipe)
             db.myrecipe.insert_one(recipe)
             flash("찜완료!")
-        else:
-            flash("이미 추가된 레시피입니다.")
         return redirect("/")
     else:
         flash("로그인해주세요!")
