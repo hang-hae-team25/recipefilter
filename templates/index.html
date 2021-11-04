@@ -140,6 +140,22 @@
             text-align: center;
         }
 
+        .search_input {
+            width: 300px;
+            height: 40px;
+            border-color: green;
+            border-radius: 0.5rem;
+            border-width: medium;
+        }
+
+        #search-btn {
+            width: 100px;
+            height: 40px;
+            margin-bottom: 5px;
+            background-color: #2E7B0A;
+            font-size: larger;
+        }
+
         .category-button {
             text-align: center;
             margin-bottom: 100px;
@@ -148,6 +164,11 @@
         .category-button .btn-info {
             background-color: orange;
             margin-right: 20px;
+            background-color: orange;
+            margin-right: 20px;
+            width: 100px;
+            height: 50px;
+            font-size: x-large;
         }
 
         #lets-click {
@@ -155,6 +176,9 @@
             text-align: center;
             font-size: x-large;
             margin-bottom: 20px;
+            color: #2E7B0A;
+            font-size: xxx-large;
+            font-weight: 600;
         }
 
         .card {
@@ -188,7 +212,7 @@
 
     <div class="search-container">
         <input class="search_input" id="search" type="text" placeholder="Search">
-        <button type="button" onclick="searchRecipes()" class="btn btn-info">재료 검색</button>
+        <button type="button" onclick="searchRecipes()" class="btn btn-info" id="search-btn">재료 검색</button>
     </div>
 
     <label id="lets-click">제외 원하는 재료를 클릭해 보세요!</label>
