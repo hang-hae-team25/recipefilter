@@ -21,7 +21,7 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
-        # print(user_info) 토큰으로 받아온 값 확인
+        #print(user_info) 토큰으로 받아온 값 확인
         return render_template('index.html', user_info=payload["id"])
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
@@ -89,7 +89,8 @@ def check_dup():
     return jsonify({'result': 'success', 'exists': exists})
 
 
-def view_recipes_help(recipes, parsedRecipes):
+def view_recipes_help(filterKeyword, recipes, parsedRecipes):
+
     for i in range(0, len(recipes)):
         output = {'title': recipes[i]['title'], 'hyperlink': recipes[i]['hyperlink'], 'image': recipes[i]['image']}
         if 'description' in recipes[i]:
@@ -119,8 +120,12 @@ def view_recipes_help(recipes, parsedRecipes):
 
         output['ingredient'] = allIngredients
         output['category'] = categorys
-        if 'filter' in recipes[i]:
-            output['filter'] = 'Y'
+        if len(filterKeyword) > 0:
+            for keyword in filterKeyword:
+                if keyword in recipes[i]:
+                    print(keyword)
+                    output['filter'] = 'Y'
+                    break;
         parsedRecipes.append(output)
 
 
@@ -128,7 +133,23 @@ def view_recipes_help(recipes, parsedRecipes):
 def view_recipes():
     recipes = list(db.dbrecipefilter.find({}, {'_id': False}))
     parsedRecipes = []
-    view_recipes_help(recipes, parsedRecipes)
+
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    user_info = db.users.find_one({"username": payload["id"]})
+    keyword = []
+    if user_info['meat'] == '육류':
+        keyword.append('category1')
+    if user_info['seafood'] == '해산물':
+        keyword.append('category2')
+    if user_info['vegetable'] == '채소':
+        keyword.append('category5')
+    if user_info['grain'] == '곡류':
+        keyword.append('category4')
+    if user_info['dairy'] == '유제품':
+        keyword.append('category3')
+
+    view_recipes_help(keyword, recipes, parsedRecipes)
     return jsonify({'recipes': parsedRecipes})
 
 
@@ -157,11 +178,9 @@ def filter_recipes(keyword):
     # category_receive = request.form['category_give']
     recipes = list(db.dbrecipefilter.find({}, {'_id': False}))
     parsedRecipes = []
-    for recipe in recipes:
-        if keyword in recipe:
-            recipe['filter'] = 'Y'
-
-    view_recipes_help(recipes, parsedRecipes)
+    keylist = []
+    keylist.append(keyword)
+    view_recipes_help(keylist, recipes, parsedRecipes)
 
     return jsonify({'recipes': parsedRecipes})
 
