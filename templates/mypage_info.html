@@ -47,9 +47,12 @@
             background-color: darkseagreen;
             width: 200px;
             height: 150px;
-            margin-top: 100px;
+            margin-top: 50px;
             margin-right: 10px;
+            margin-left: 20px;
             border-radius: 0.25rem;
+            position: absolute;
+            z-index: 1;
         }
 
         .nav-link {
@@ -63,9 +66,13 @@
         }
 
         .section {
-            padding: 1rem 1.5rem;
-            max-width: 750px;
+            max-width: 1400px;
+            height: 750px;
             margin: auto;
+            padding-top: 50px;
+            position: relative;
+            background-color: beige;
+            border-radius: 0.5rem;
         }
 
         .is-sparta {
@@ -312,7 +319,7 @@
                     </div>
                     <div id="div-sign-in-or-up" class="has-text-centered">
                         <nav class="level is-mobile">
-                            <button class="level-item button is-sparta" id="update-btn" onclick="update_info()">개인정보 수정</button>
+                            <button class="level-item button is-sparta" id="update-btn" onclick="update_info()">수정하기</button>
 
                         </nav>
                         <hr>
