@@ -1,10 +1,10 @@
- {%with messages = get_flashed_messages()%}
-  {%if messages %}
-    <script type="text/javascript">
-      alert("{{messages[-1]}}");
-    </script>
-    {%endif%}
-  {%endwith%}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script type="text/javascript">
+            alert("{{messages[-1]}}");
+        </script>
+    {% endif %}
+{% endwith %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,35 +40,34 @@
                 let description = recipes[i]['description']
                 let ingredient = recipes[i]['ingredient']
                 let category = recipes[i]['category']
-                let button_change =``
-                let temp_html = ` <div class="card">
-                                                <img class="card-img-top"
+                let button_change = ``
+                let temp_html = ` <div class="card" property="height:800px" style="border: darkblue solid; border-radius: 10px;" >
+                                                <img class="card-img-top" style="width: 447px;"
                                                      src=${image}
                                                      alt="Card image cap">
-                                                <div class="card-body">
-                                                    <a href=${hyperlink} class="card-title"> 레시피 이름: ${title}</a>
-                                                    <p class="card-text"> 레시피 재료 : ${ingredient} </p>
-                                                    <p class="card-text"> 레시피 분류 : ${category} </p>
-                                                    <p class="card-text comment"> 레시피 설명: ${description} </p>
+                                                <div class="card-body" style="overflow: scroll; text-overflow: fade; white-space: normal;width: 447px; height: 330px;">
+                                                    <a href=${hyperlink} class="card-title"><span style="font-weight:bold"> 레시피 이름: </span>${title}</a>
+                                                    <p class="card-text"><span style="font-weight:bold"> 레시피 재료: </span> ${ingredient} </p>
+                                                    <p class="card-text"><span style="font-weight:bold"> 레시피 분류 : </span>${category} </p>
+                                                    <p class="card-text comment"><span style="font-weight:bold">레시피 설명: </span>${description} </p>
                                                     <button type="button" class="btn btn-primary" id="login-btn"  onclick="window.location.href='/wishlistplus?title=${title}'">찜하기</button>
                                                 </div>
                                             </div>`
 
-                let filtered_temp_html = ` <div class="card">
+                let filtered_temp_html = ` <div class="card" property="height:800px" style="border: darkblue solid; border-radius: 10px;">
                                                 <img class="card-img-top"
-                                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsyjy0oSwyUXMEvpdNHo-hQ3cyLcDpnKYe6Q&usqp=CAU"
+                                                     src="/static/filter_image(ghost).png" style="width: 447px;"
                                                      alt="Card image cap">
-                                                <div class="card-body">
-                                                    <a href=${hyperlink} class="card-title"> 레시피 이름: ${title}</a>
-                                                    <p class="card-text"> 레시피 재료 : ${ingredient} </p>
-                                                    <p class="card-text"> 레시피 분류 : ${category} </p>
-                                                    <p class="card-text comment"> 레시피 설명: ${description} </p>
+                                                <div class="card-body" style="overflow: scroll; text-overflow: fade; white-space: normal;width: 447px; height: 330px;">
+                                                    <a href=${hyperlink} class="card-title"><span style="font-weight:bold"> 레시피 이름: </span>${title}</a>
+                                                    <p class="card-text"><span style="font-weight:bold"> 레시피 재료: </span>${ingredient} </p>
+                                                    <p class="card-text"><span style="font-weight:bold"> 레시피 분류 : </span>${category} </p>
+                                                    <p class="card-text comment" ><span style="font-weight:bold"> 레시피 설명: </span>${description} </p>
                                                     <button type="button" class="btn btn-primary" id="login-btn" onclick="window.location.href='/wishlistplus?title=${title}'">찜하기</button>
                                                 </div>
                                             </div>`
-                if('filter' in recipes[i]){
-                     $('#cards-box').append(filtered_temp_html)
-                    console.log(title)
+                if ('filter' in recipes[i]) {
+                    $('#cards-box').append(filtered_temp_html)
                 } else
                     $('#cards-box').append(temp_html)
             }
@@ -80,7 +79,6 @@
                 url: "/recipes",
                 data: {},
                 success: function (response) {
-                    alert("hi")
                     let recipes = response['recipes']
                     showRecipesHelp(recipes)
                 }
@@ -158,6 +156,7 @@
             font-size: x-large;
             margin-bottom: 20px;
         }
+
         .card {
             height: 800px;
         }
@@ -173,7 +172,7 @@
 
     </style>
 </head>
-<body>
+<body style="background-color:#f1e12c">
 <!-- header file import -->
 <header>
     {% include 'header.html' %}
@@ -184,7 +183,7 @@
 <div class="main-content">
 
     <div>
-        <img class="main-logo" src="/static/logo-revised.png">
+        <img class="main-logo" src="/static/banner_image.png">
     </div>
 
     <div class="search-container">
@@ -204,18 +203,7 @@
 
 
     <div class="card-columns" id="cards-box">
-        <div class="card" >
-            <img class="card-img-top"
-                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsyjy0oSwyUXMEvpdNHo-hQ3cyLcDpnKYe6Q&usqp=CAU"
-                 alt="Card image cap">
-            <div class="card-body">
-                <a href="https://www.10000recipe.com/recipe/6967794" class="card-title"> 음식 이름</a>
-                <p class="card-text"> 음식 재료 </p>
-                <p class="card-text"> 음식 분류 </p>
-                <p class="card-text comment"> 음식 설명 </p>
-                <button type="button" class="btn btn-primary" id="login-btn">찜하기</button>
-            </div>
-        </div>
+
     </div>
 
 </div>
