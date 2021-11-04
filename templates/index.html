@@ -41,11 +41,11 @@
                 let ingredient = recipes[i]['ingredient']
                 let category = recipes[i]['category']
                 let button_change = ``
-                let temp_html = ` <div class="card" property="height:800px" >
-                                                <img class="card-img-top"
+                let temp_html = ` <div class="card" property="height:800px" style="border: darkblue solid; border-radius: 10px;" >
+                                                <img class="card-img-top" style="width: 447px;"
                                                      src=${image}
                                                      alt="Card image cap">
-                                                <div class="card-body" style="overflow: scroll; text-overflow: fade; white-space: normal;width: 450px; height: 330px;">
+                                                <div class="card-body" style="overflow: scroll; text-overflow: fade; white-space: normal;width: 447px; height: 330px;">
                                                     <a href=${hyperlink} class="card-title"><span style="font-weight:bold"> 레시피 이름: </span>${title}</a>
                                                     <p class="card-text"><span style="font-weight:bold"> 레시피 재료: </span> ${ingredient} </p>
                                                     <p class="card-text"><span style="font-weight:bold"> 레시피 분류 : </span>${category} </p>
@@ -54,11 +54,11 @@
                                                 </div>
                                             </div>`
 
-                let filtered_temp_html = ` <div class="card" property="height:800px">
+                let filtered_temp_html = ` <div class="card" property="height:800px" style="border: darkblue solid; border-radius: 10px;">
                                                 <img class="card-img-top"
-                                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsyjy0oSwyUXMEvpdNHo-hQ3cyLcDpnKYe6Q&usqp=CAU"
+                                                     src="/static/filter_image(ghost).png" style="width: 447px;"
                                                      alt="Card image cap">
-                                                <div class="card-body" style="overflow: scroll; text-overflow: fade; white-space: normal;width: 450px; height: 330px;">
+                                                <div class="card-body" style="overflow: scroll; text-overflow: fade; white-space: normal;width: 447px; height: 330px;">
                                                     <a href=${hyperlink} class="card-title"><span style="font-weight:bold"> 레시피 이름: </span>${title}</a>
                                                     <p class="card-text"><span style="font-weight:bold"> 레시피 재료: </span>${ingredient} </p>
                                                     <p class="card-text"><span style="font-weight:bold"> 레시피 분류 : </span>${category} </p>
@@ -172,7 +172,7 @@
 
     </style>
 </head>
-<body>
+<body style="background-color:#f1e12c">
 <!-- header file import -->
 <header>
     {% include 'header.html' %}
@@ -183,7 +183,7 @@
 <div class="main-content">
 
     <div>
-        <img class="main-logo" src="/static/logo-revised.png">
+        <img class="main-logo" src="/static/banner_image.png">
     </div>
 
     <div class="search-container">
