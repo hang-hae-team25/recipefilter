@@ -68,7 +68,7 @@
                                             </div>`
                 if('filter' in recipes[i]){
                      $('#cards-box').append(filtered_temp_html)
-                    console.log(recipes[i]['filter'])
+                    console.log(title)
                 } else
                     $('#cards-box').append(temp_html)
             }
@@ -104,6 +104,8 @@
         }
 
         function filterRecipes(category) {
+
+            $('#cards-box').empty()
 
             $.ajax({
                 type: "POST",
