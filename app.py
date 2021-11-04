@@ -206,6 +206,7 @@ def wishplus():
         mywish_ing = list(db.myrecipe.find({'title': title_receive}, {'_id': False}))
         wishIdlist = []
         for ing in mywish_ing:
+
             wishIdlist.append(ing['user_id'])
 
         if mywish_ing:
@@ -214,14 +215,12 @@ def wishplus():
             else:
                 recipe = db.dbrecipefilter.find_one({'title': title}, {'_id': False})
                 recipe['user_id'] =user_id
-                #print(recipe)
                 db.myrecipe.insert_one(recipe)
                 flash("찜완료!")
         else:
             recipe = db.dbrecipefilter.find_one({'title': title}, {'_id': False})
             print(recipe)
             recipe['user_id'] = user_id
-            # print(recipe)
             db.myrecipe.insert_one(recipe)
             flash("찜완료!")
         return redirect("/")
