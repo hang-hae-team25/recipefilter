@@ -275,5 +275,61 @@ def my_recipe_view():
 
     return jsonify({'recipes': parsedRecipes})
 
+
+# 마이페이지(개인정보 수정) 이동
+@app.route('/mypage_info', methods=['GET'])
+def mypage():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"username": payload["id"]})
+        # print(user_info) 토큰으로 받아온 값 확인
+        return render_template('mypage_info.html', user_info=payload["id"])
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+
+
+# 회원정보 수정
+@app.route('/update_info', methods=['POST'])
+def update_info():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+
+        password_receive = request.form['password_give']
+        password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+        nickname_receive = request.form['nickname_give']
+        meat_receive = request.form['meat_give']
+        seafood_receive = request.form['seafood_give']
+        vegetable_receive = request.form['vegetable_give']
+        grain_receive = request.form['grain_give']
+        dairy_receive = request.form['dairy_give']
+
+        revised_doc = {
+            "password": password_hash,  # 비밀번호
+            "nickname": nickname_receive,  # 닉네임
+            "meat": meat_receive,  # 육류
+            "seafood": seafood_receive,  # 해산물
+            "vegetable": vegetable_receive,  # 채소
+            "grain": grain_receive,  # 곡류
+            "dairy": dairy_receive,  # 유제품
+        }
+
+        db.users.update_one({'username': payload['id']}, {'$set': revised_doc})
+        # print(user_info) 토큰으로 받아온 값 확인
+        return jsonify({"result": "success", 'msg': '개인정보 수정완료!'})
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+
+
+# 404 에러 처리
+@app.errorhandler(404)
+def page_not_found(error):
+	return "페이지가 없습니다. URL를 확인 하세요", 404
+
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
