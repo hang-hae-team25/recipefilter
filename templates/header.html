@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
      <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,15 +57,25 @@
     }
 
     </style>
+
+    <script>
+        // 로그아웃 처리: 로그아웃 클릭 -> 토큰제거 -> 로그인 페이지로
+        function logout() {
+            console.log('로그아웃 클릭')
+            $.removeCookie('mytoken', {path: '/'});
+            window.location.href="/login"
+        }
+    </script>
+
 </head>
 <body>
 
 <div class="header">
     <div class="login-info">
         <img class="img" src="/static/broccoli-fruit-green-healthy-vegetable_107405.png">
-        <label class="welcome">_______님 환영합니다 </label>
+        <label class="welcome">{{ user_info }}님 환영합니다 </label>
         <button type="button" class="btn btn-primary" id="login-btn">마이페이지</button>
-        <button type="button" class="btn btn-info">로그아웃</button>
+        <button type="button" class="btn btn-info" onclick="logout()">로그아웃</button>
     </div>
 
 </div>
