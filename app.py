@@ -2,16 +2,15 @@ from pymongo import MongoClient
 import jwt
 import datetime
 import hashlib
-from flask import Flask, render_template, jsonify, request, redirect, url_for,flash
+from flask import Flask, render_template, jsonify, request, redirect, url_for, flash
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
-
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 SECRET_KEY = 'SPARTA'
-app.secret_key=SECRET_KEY
+app.secret_key =SECRET_KEY
 client = MongoClient('localhost', 27017)
 db = client.dbrecipefilter
 
@@ -21,9 +20,9 @@ def home():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-
-        return render_template('index.html')
-      
+        user_info = db.users.find_one({"username": payload["id"]})
+        # print(user_info) 토큰으로 받아온 값 확인
+        return render_template('index.html', user_info=payload["id"])
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -47,8 +46,8 @@ def sign_in():
 
     if result is not None:
         payload = {
-         'id': username_receive,
-         'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
+            'id': username_receive,
+            'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
 
