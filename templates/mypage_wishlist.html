@@ -1,3 +1,10 @@
+{%with messages = get_flashed_messages()%}
+  {%if messages %}
+    <script type="text/javascript">
+      alert("{{messages[-1]}}");
+    </script>
+    {%endif%}
+  {%endwith%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,11 +69,51 @@
 
      }
     </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            showRecipes();
+        });
 
+        function showRecipes() {
+            $.ajax({
+                type: "GET",
+                url: "/myrecipeview",
+                data: {},
+                success: function (response) {
+                    let recipes = response['recipes']
+                    for (let i = 0; i < recipes.length; i++) {
+                        let title = recipes[i]['title']
+                        let hyperlink = recipes[i]['hyperlink']
+                        let image = recipes[i]['image']
+                        let description = recipes[i]['description']
+                        let ingredient = recipes[i]['ingredient']
+                        let category = recipes[i]['category']
+
+                        let temp_html = ` <div class="card">
+                                                <img class="card-img-top"
+                                                     src=${image}
+                                                     alt="Card image cap">
+                                                <div class="card-body">
+                                                    <a href=${hyperlink} class="card-title"> 레시피 이름: ${title}</a>
+                                                    <p class="card-text"> 레시피 재료 : ${ingredient} </p>
+                                                    <p class="card-text"> 레시피 분류 : ${category} </p>
+                                                    <p class="card-text comment"> 레시피 설명: ${description} </p>
+                                                    <button type="button" class="btn btn-primary" id="login-btn" onclick="window.location.href='/wishlistminus?title=${title}'">찜삭제</button>
+                                                </div>
+                                            </div>`
+
+                        $('#cards-box').append(temp_html)
+                    }
+                }
+            })
+        }
+    </script>
 </head>
 <body>
 <!-- header file import 로그인 이전 헤더-->
-<div id="headers"></div>
+<header>
+    {% include 'header.html' %}
+</header>
 
 <div class="main-contnent">
     <label class="subtitle">찜목록</label>
@@ -96,66 +143,7 @@
                 </div>
 
             </div>
-            <div class="card">
-                <img class="card-img-top"
-                     src="https://images.chosun.com/resizer/k6L-J7LOYHpzi7J0o6f-LAfbtVw=/464x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/RWXHN2ZUBBXGLLFHBULDVSWBAA.jpg"
-                     alt="Card image cap">
-                <div class="card-body">
-                    <a href="https://www.10000recipe.com/recipe/6967794" class="card-title"> 음식 이름</a>
-                    <p class="card-text"> 음식 재료 </p>
-                    <p class="card-text comment"> 음식 설명 </p>
-                    <button type="button" class="btn btn-primary" id="login-btn">찜삭제</button>
-                </div>
 
-            </div>
-            <div class="card">
-                <img class="card-img-top"
-                     src="https://images.chosun.com/resizer/k6L-J7LOYHpzi7J0o6f-LAfbtVw=/464x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/RWXHN2ZUBBXGLLFHBULDVSWBAA.jpg"
-                     alt="Card image cap">
-                <div class="card-body">
-                    <a href="https://www.10000recipe.com/recipe/6967794" class="card-title"> 음식 이름</a>
-                    <p class="card-text"> 음식 재료 </p>
-                    <p class="card-text comment"> 음식 설명 </p>
-                    <button type="button" class="btn btn-primary" id="login-btn">찜삭제</button>
-                </div>
-
-            </div>
-            <div class="card">
-                <img class="card-img-top"
-                     src="https://images.chosun.com/resizer/k6L-J7LOYHpzi7J0o6f-LAfbtVw=/464x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/RWXHN2ZUBBXGLLFHBULDVSWBAA.jpg"
-                     alt="Card image cap">
-                <div class="card-body">
-                    <a href="https://www.10000recipe.com/recipe/6967794" class="card-title"> 음식 이름</a>
-                    <p class="card-text"> 음식 재료 </p>
-                    <p class="card-text comment"> 음식 설명 </p>
-                    <button type="button" class="btn btn-primary" id="login-btn">찜삭제</button>
-                </div>
-
-            </div>
-            <div class="card">
-                <img class="card-img-top"
-                     src="https://images.chosun.com/resizer/k6L-J7LOYHpzi7J0o6f-LAfbtVw=/464x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/RWXHN2ZUBBXGLLFHBULDVSWBAA.jpg"
-                     alt="Card image cap">
-                <div class="card-body">
-                    <a href="https://www.10000recipe.com/recipe/6967794" class="card-title"> 음식 이름</a>
-                    <p class="card-text"> 음식 재료 </p>
-                    <p class="card-text comment"> 음식 설명 </p>
-                    <button type="button" class="btn btn-primary" id="login-btn">찜삭제</button>
-                </div>
-
-            </div>
-            <div class="card">
-                <img class="card-img-top"
-                     src="https://images.chosun.com/resizer/k6L-J7LOYHpzi7J0o6f-LAfbtVw=/464x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/RWXHN2ZUBBXGLLFHBULDVSWBAA.jpg"
-                     alt="Card image cap">
-                <div class="card-body">
-                    <a href="https://www.10000recipe.com/recipe/6967794" class="card-title"> 음식 이름</a>
-                    <p class="card-text"> 음식 재료 </p>
-                    <p class="card-text comment"> 음식 설명 </p>
-                    <button type="button" class="btn btn-primary" id="login-btn">찜삭제</button>
-                </div>
-
-            </div>
         </div>
 
         <button type="button" class="btn btn-primary" id="main-btn">메인페이지로</button>

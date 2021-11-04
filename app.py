@@ -2,7 +2,7 @@ from pymongo import MongoClient
 import jwt
 import datetime
 import hashlib
-from flask import Flask, render_template, jsonify, request, redirect, url_for
+from flask import Flask, render_template, jsonify, request, redirect, url_for, flash
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 
@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 SECRET_KEY = 'SPARTA'
-
+app.secret_key =SECRET_KEY
 client = MongoClient('localhost', 27017)
 db = client.dbrecipefilter
 
@@ -159,6 +159,71 @@ def filter_recipes(keyword):
         if keyword in recipe:
             recipe['filter'] = 'Y'
     view_recipes_help(recipes, parsedRecipes)
+
+    return jsonify({'recipes': parsedRecipes})
+
+
+@app.route('/wishlist')
+def mywish():
+    token_receive = request.cookies.get('mytoken')
+    if token_receive is not None:
+        return render_template("mypage_wishlist.html")
+    else:
+        return render_template('login.html')
+
+@app.route('/wishlistplus', methods=['GET'])
+def wishplus():
+    token_receive = request.cookies.get('mytoken')
+    title = request.args.get('title')
+    recipe = db.dbrecipefilter.find_one({'title': title},{'_id':False})
+    recipe['user']='user'
+    print(recipe)
+
+    db.myrecipe.insert_one(recipe)
+    flash("찜완료!")
+    return redirect("/")
+
+@app.route('/wishlistminus', methods=['GET'])
+def wishminus():
+    title = request.args.get('title')
+    db.myrecipe.delete_one({'title':title})
+    flash("찜삭제 완료!")
+    return redirect("/wishlist")
+
+@app.route('/myrecipeview', methods=['GET'])
+def my_recipe_view():
+    recipes = list(db.myrecipe.find({'user':'user'}, {'_id': False}))
+    parsedRecipes = []
+    for i in range(0, len(recipes)):
+        output = {'title': recipes[i]['title'], 'hyperlink': recipes[i]['hyperlink'], 'image': recipes[i]['image']}
+        if 'description' in recipes[i]:
+            output['description'] = recipes[i]['description']
+        ingredients = []
+        category = []
+        for j in range(0, 5):
+            key = 'category' + str(j)
+            if key in recipes[i]:
+                category.append(recipes[i][key])
+        categorys = ''
+        for j in range(0, len(category)):
+            categorys += category[j] + ' '
+
+        ingreIndex = 1
+        while True:
+            key = 'ingredient' + str(ingreIndex)
+            if key in recipes[i]:
+                ingredients.append(recipes[i][key])
+            else:
+                break
+            ingreIndex += 1
+
+        allIngredients = ''
+        for j in range(0, len(ingredients)):
+            allIngredients += ingredients[j] + ' '
+
+        output['ingredient'] = allIngredients
+        output['category'] = categorys
+        parsedRecipes.append(output)
 
     return jsonify({'recipes': parsedRecipes})
 
