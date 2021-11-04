@@ -88,7 +88,6 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-
 def view_recipes_help(recipes, parsedRecipes):
     for i in range(0, len(recipes)):
         output = {'title': recipes[i]['title'], 'hyperlink': recipes[i]['hyperlink'], 'image': recipes[i]['image']}
@@ -123,11 +122,11 @@ def view_recipes_help(recipes, parsedRecipes):
             output['filter'] = 'Y'
         parsedRecipes.append(output)
 
-
 @app.route('/recipes', methods=['GET'])
 def view_recipes():
     recipes = list(db.dbrecipefilter.find({}, {'_id': False}))
     parsedRecipes = []
+
     view_recipes_help(recipes, parsedRecipes)
     return jsonify({'recipes': parsedRecipes})
 
@@ -175,14 +174,23 @@ def mywish():
 @app.route('/wishlistplus', methods=['GET'])
 def wishplus():
     token_receive = request.cookies.get('mytoken')
-    title = request.args.get('title')
-    recipe = db.dbrecipefilter.find_one({'title': title},{'_id':False})
-    recipe['user']='user'
-    print(recipe)
-
-    db.myrecipe.insert_one(recipe)
-    flash("찜완료!")
-    return redirect("/")
+    if token_receive is not None:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_id =payload["id"]
+        title = request.args.get('title')
+        mywish_ing =db.myrecipe.find_one({'title': title}, {'_id': False})
+        if not mywish_ing:
+            recipe = db.dbrecipefilter.find_one({'title': title}, {'_id': False})
+            recipe['user_id'] =user_id
+            #print(recipe)
+            db.myrecipe.insert_one(recipe)
+            flash("찜완료!")
+        else:
+            flash("이미 추가된 레시피입니다.")
+        return redirect("/")
+    else:
+        flash("로그인해주세요!")
+        return render_template("login.html")
 
 @app.route('/wishlistminus', methods=['GET'])
 def wishminus():
@@ -193,7 +201,10 @@ def wishminus():
 
 @app.route('/myrecipeview', methods=['GET'])
 def my_recipe_view():
-    recipes = list(db.myrecipe.find({'user':'user'}, {'_id': False}))
+    token_receive = request.cookies.get('mytoken')
+
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    recipes = list(db.myrecipe.find({'user_id':payload["id"]}, {'_id': False}))
     parsedRecipes = []
     for i in range(0, len(recipes)):
         output = {'title': recipes[i]['title'], 'hyperlink': recipes[i]['hyperlink'], 'image': recipes[i]['image']}
@@ -227,6 +238,7 @@ def my_recipe_view():
         parsedRecipes.append(output)
 
     return jsonify({'recipes': parsedRecipes})
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

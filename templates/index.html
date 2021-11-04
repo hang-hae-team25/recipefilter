@@ -40,7 +40,7 @@
                 let description = recipes[i]['description']
                 let ingredient = recipes[i]['ingredient']
                 let category = recipes[i]['category']
-
+                let button_change =``
                 let temp_html = ` <div class="card">
                                                 <img class="card-img-top"
                                                      src=${image}
@@ -50,7 +50,7 @@
                                                     <p class="card-text"> 레시피 재료 : ${ingredient} </p>
                                                     <p class="card-text"> 레시피 분류 : ${category} </p>
                                                     <p class="card-text comment"> 레시피 설명: ${description} </p>
-                                                    <button type="button" class="btn btn-primary" id="login-btn" <button type="button" class="btn btn-primary" id="login-btn" onclick="window.location.href='/wishlistplus?title=${title}'">찜하기</button>
+                                                    <button type="button" class="btn btn-primary" id="login-btn"  onclick="window.location.href='/wishlistplus?title=${title}'">찜하기</button>
                                                 </div>
                                             </div>`
 
@@ -63,7 +63,7 @@
                                                     <p class="card-text"> 레시피 재료 : ${ingredient} </p>
                                                     <p class="card-text"> 레시피 분류 : ${category} </p>
                                                     <p class="card-text comment"> 레시피 설명: ${description} </p>
-                                                    <button type="button" class="btn btn-primary" id="login-btn">찜하기</button>
+                                                    <button type="button" class="btn btn-primary" id="login-btn" onclick="window.location.href='/wishlistplus?title=${title}'">찜하기</button>
                                                 </div>
                                             </div>`
                 if('filter' in recipes[i]){
