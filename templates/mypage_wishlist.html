@@ -74,6 +74,7 @@
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
+            $('#cards-box').empty();
             showRecipes();
         });
 
@@ -134,6 +135,18 @@
         </div>
 
         <div class="card-columns" id="cards-box">
+            <div class="card">
+                <img class="card-img-top"
+                     src="https://images.chosun.com/resizer/k6L-J7LOYHpzi7J0o6f-LAfbtVw=/464x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/RWXHN2ZUBBXGLLFHBULDVSWBAA.jpg"
+                     alt="Card image cap">
+                <div class="card-body">
+                    <a href="https://www.10000recipe.com/recipe/6967794" class="card-title"> 음식 이름</a>
+                    <p class="card-text"> 음식 재료 </p>
+                    <p class="card-text comment"> 음식 설명 </p>
+                    <button type="button" class="btn btn-primary" id="login-btn">찜삭제</button>
+                </div>
+
+            </div>
 
         </div>
 
