@@ -68,6 +68,14 @@
          align-content:center;
 
      }
+      .section {
+            max-width: 1400px;
+            margin: auto;
+            padding-top: 50px;
+            position: relative;
+            background-color: mediumseagreen;
+            border-radius: 0.5rem;
+        }
 
     </style>
     <script type="text/javascript">
@@ -90,7 +98,7 @@
                         let ingredient = recipes[i]['ingredient']
                         let category = recipes[i]['category']
 
-                        let temp_html = ` <div class="card" property="height:750px" style="box-shadow: 3px 3px 3px grey;; border-radius: 10px;" >
+                        let temp_html = ` <div class="card" property="height:750px" style="box-shadow: 3px 3px 3px grey; border: grey solid;border-radius: 10px;" >
                                                 <img class="card-img-top"
                                                      src=${image}
                                                      alt="Card image cap">
@@ -118,22 +126,13 @@
 
 <div class="main-contnent">
     <label class="subtitle">찜목록</label>
+        <section class="section">
         <button type="button" class="btn btn-primary" id="main-btn" onclick="window.location.href='/'">메인페이지로</button>
-        <div class="sidebar">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/mypage_info">개인정보수정</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">찜목록</a>
-                </li>
-                </li>
-            </ul>
-        </div>
 
         <div class="card-columns" id="cards-box">
 
         </div>
+        </section>
 
 </div>
 
