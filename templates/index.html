@@ -51,7 +51,7 @@
                                                     <p class="card-text"><span style="font-weight:bold"> 레시피 재료: </span> ${ingredient} </p>
                                                     <p class="card-text"><span style="font-weight:bold"> 레시피 분류 : </span>${category} </p>
                                                     <p class="card-text comment"><span style="font-weight:bold">레시피 설명: </span>${description} </p>
-                                                    <button type="button" class="btn btn-primary" id="login-btn"  onclick="window.location.href='/wishlistplus?title=${title}'">찜하기</button>
+                                                    <button type="button" class="btn btn-primary" id="login-btn"  onclick="window.location.href='/wishlistplus?title=${title}'"><img class="btn-img" src="/static/heart.png">찜하기</button>
                                                 </div>
                                             </div>`
                 let filtered_temp_html = ` <div class="card" property="height:800px" style="border: darkblue solid; border-radius: 10px;">
@@ -63,7 +63,7 @@
                                                     <p class="card-text"><span style="font-weight:bold"> 레시피 재료: </span>${ingredient} </p>
                                                     <p class="card-text"><span style="font-weight:bold"> 레시피 분류 : </span>${category} </p>
                                                     <p class="card-text comment" ><span style="font-weight:bold"> 레시피 설명: </span>${description} </p>
-                                                    <button type="button" class="btn btn-primary" id="login-btn" onclick="window.location.href='/wishlistplus?title=${title}'">찜하기</button>
+                                                    <button type="button" class="btn btn-primary" id="login-btn" onclick="window.location.href='/wishlistplus?title=${title}'"><img class="btn-img" src="/static/heart.png">찜하기</button>
                                                 </div>
                                             </div>`
                 if ('filter' in recipes[i]) {
