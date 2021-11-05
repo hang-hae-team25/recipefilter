@@ -189,7 +189,9 @@ def filter_recipes(keyword):
 def mywish():
     token_receive = request.cookies.get('mytoken')
     if token_receive is not None:
-        return render_template("mypage_wishlist.html")
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_id = payload["id"]
+        return render_template("mypage_wishlist.html",user_info=user_id)
     else:
         return render_template('login.html')
 
