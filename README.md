@@ -1,4 +1,4 @@
-# 이 건 못 먹 지
+# 이 건 못 먹 지🥗
 ---
 
 # 1. 프로젝트 개요
@@ -10,7 +10,8 @@
 정보가 무궁무진한 21세기에는 온라인 상에서 음식과 레시피에 대한 정보를 쉽게 찾을 수 있습니다.
 사람들이 음식에 대한 정확한 정보를 많이 접할 수 있기때문에 본인의 개성으로 먹지 않거나 못 먹는 음식에 대해 구분하곤 하는데요. 그에 따른 특정 성분 혹은 식품군 섭취를 원하지 않는 사용자들의 니즈를 충족시켜주기 위한 서비스입니다.
 
-## 2) 팀원소개
+
+## 2) 팀원소개🧙‍♂️
 
 3인 1조 팀프로젝트
 
@@ -20,7 +21,8 @@
 
 🧑🏻‍💻 이도연: 개인정보수정/찜목록 페이지 CSS, 찜목록 CRD 기능 구현
 
-## 3) 스케줄링
+
+## 3) 스케줄링📆
 
 2021년 11월 1일 ~ 2021년 11월 5일
 
@@ -35,25 +37,24 @@
 # 2. 개발환경
 
 ## 1) FRONT-END
+<img src="https://img.shields.io/badge/HTML 5-E34F26?style=flat&logo=HTML5&logoColor=white"/></a>&nbsp;&nbsp;&nbsp;
+<img src="https://img.shields.io/badge/CSS-1572B6?style=flat&logo=CSS3&logoColor=white"/></a>&nbsp;&nbsp;&nbsp;
+<img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=Bootstrap&logoColor=white"/></a>&nbsp;&nbsp;&nbsp;
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white"/></a>&nbsp;&nbsp;&nbsp;
+<img src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jQuery&logoColor=white"/></a>&nbsp;&nbsp;&nbsp;
+<img src="https://img.shields.io/badge/Ajax-3766AB?style=flat&logo=Ajax&logoColor=white"/></a>&nbsp;&nbsp;&nbsp;
+<img src="https://img.shields.io/badge/jinja 2-B41717?style=flat&logo=Jinja&logoColor=white"/></a>&nbsp;&nbsp;&nbsp;
+<img src="https://img.shields.io/badge/Bulma-00D1B2?style=flat&logo=Bulma&logoColor=white"/></a>&nbsp;&nbsp;&nbsp;
 
-- HTML5
-- CSS
-- Bootstrap
-- Javascript
-- jQuery 3.5.1
-- Ajax
-- jinja2
-- Bulma 0.9.2
 
 ## 2) BACK-END
+<img src="https://img.shields.io/badge/Python 3-3766AB?style=flat&logo=Python&logoColor=white"/></a>&nbsp;&nbsp;&nbsp;
+<img src="https://img.shields.io/badge/mongoDB-47A248?style=flat&logo=MongoDB&logoColor=white"/></a>&nbsp;&nbsp;&nbsp;
+<img src="https://img.shields.io/badge/Flask-000000?style=flat&logo=Flask&logoColor=white"/></a>&nbsp;&nbsp;&nbsp;
 
-- Python 3
-- mongoDB 4.4
-- Flask
 
 ## 3) DEPLOY
-
-- AWS EC2(Ubuntu 18.04 LTS)
+<img src="https://img.shields.io/badge/AWS EC2 (Ubuntu 18.04 LTS)-232F3E?style=flat&logo=Amazon AWS&logoColor=white"/></a>&nbsp;&nbsp;&nbsp;
 
 ---
 
