@@ -38,9 +38,10 @@
                 let hyperlink = recipes[i]['hyperlink']
                 let image = recipes[i]['image']
                 let description = recipes[i]['description']
+                if(typeof description == 'undefined')
+                    description = '설명 없음'
                 let ingredient = recipes[i]['ingredient']
                 let category = recipes[i]['category']
-                let button_change = ``
                 let temp_html = ` <div class="card" property="height:800px" style="border: darkblue solid; border-radius: 10px;" >
                                                 <img class="card-img-top" style="width: 447px;"
                                                      src=${image}
@@ -50,10 +51,9 @@
                                                     <p class="card-text"><span style="font-weight:bold"> 레시피 재료: </span> ${ingredient} </p>
                                                     <p class="card-text"><span style="font-weight:bold"> 레시피 분류 : </span>${category} </p>
                                                     <p class="card-text comment"><span style="font-weight:bold">레시피 설명: </span>${description} </p>
-                                                    <button type="button" class="btn btn-primary" id="login-btn"  onclick="window.location.href='/wishlistplus?title=${title}'">찜하기</button>
+                                                    <button type="button" class="btn btn-primary" id="login-btn"  onclick="window.location.href='/wishlistplus?title=${title}'"><img class="btn-img" src="/static/heart.png">찜하기</button>
                                                 </div>
                                             </div>`
-
                 let filtered_temp_html = ` <div class="card" property="height:800px" style="border: darkblue solid; border-radius: 10px;">
                                                 <img class="card-img-top"
                                                      src="/static/filter_image(ghost).png" style="width: 447px;"
@@ -63,7 +63,7 @@
                                                     <p class="card-text"><span style="font-weight:bold"> 레시피 재료: </span>${ingredient} </p>
                                                     <p class="card-text"><span style="font-weight:bold"> 레시피 분류 : </span>${category} </p>
                                                     <p class="card-text comment" ><span style="font-weight:bold"> 레시피 설명: </span>${description} </p>
-                                                    <button type="button" class="btn btn-primary" id="login-btn" onclick="window.location.href='/wishlistplus?title=${title}'">찜하기</button>
+                                                    <button type="button" class="btn btn-primary" id="login-btn" onclick="window.location.href='/wishlistplus?title=${title}'"><img class="btn-img" src="/static/heart.png">찜하기</button>
                                                 </div>
                                             </div>`
                 if ('filter' in recipes[i]) {
@@ -166,7 +166,7 @@
             margin-right: 20px;
             background-color: orange;
             margin-right: 20px;
-            width: 100px;
+            width: 150px;
             height: 50px;
             font-size: x-large;
         }
@@ -193,7 +193,6 @@
             object-fit: cover;
         }
 
-
     </style>
 </head>
 <body style="background-color:#f1e12c">
@@ -218,15 +217,15 @@
     <label id="lets-click">제외 원하는 재료를 클릭해 보세요!</label>
 
     <div class="category-button">
-        <button type="button" onclick="filterRecipes('category1')" class="btn btn-info">육류</button>
-        <button type="button" onclick="filterRecipes('category2')" class="btn btn-info">해산물</button>
-        <button type="button" onclick="filterRecipes('category5')" class="btn btn-info">채소</button>
-        <button type="button" onclick="filterRecipes('category4')" class="btn btn-info">탄수화물</button>
-        <button type="button" onclick="filterRecipes('category3')" class="btn btn-info">유제품</button>
+        <button type="button" onclick="filterRecipes('category1')" class="btn btn-info"><img class="btn-img" src="/static/meat.png">육류</button>
+        <button type="button" onclick="filterRecipes('category2')" class="btn btn-info"><img class="btn-img" src="/static/crab.png">해산물</button>
+        <button type="button" onclick="filterRecipes('category5')" class="btn btn-info"><img class="btn-img" src="/static/vege.png">채소</button>
+        <button type="button" onclick="filterRecipes('category4')" class="btn btn-info"><img class="btn-img" src="/static/bread.png">탄수화물</button>
+        <button type="button" onclick="filterRecipes('category3')" class="btn btn-info"><img class="btn-img" src="/static/milk.png">유제품</button>
     </div>
 
 
-    <div class="card-columns" id="cards-box">
+    <div class="card-columns" id="cards-box" style="display: grid; grid-template-columns: 1fr 1fr 1fr">
 
 
     </div>

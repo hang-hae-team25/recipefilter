@@ -39,20 +39,28 @@
     }
     .welcome {
         margin-right: 20px;
+        margin-top: 5px;
+        font-weight: bold;
+        font-size: large;
     }
     .btn {
         height: 32px;
         padding: 0px 5px 0px 5px;
     }
     .btn-primary {
-        background-color: green;
-        border: green;
+        background-color: darkgreen;
+        border: darkgreen;
     }
     .btn-info {
         background-color: slategray;
         border: slategray;
     }
-    #login-btn {
+    #update-btn {
+        margin-right: 10px;
+    }
+    #wishlist-btn {
+        background-color: purple;
+        border: purple;
         margin-right: 10px;
     }
 
@@ -74,8 +82,8 @@
     <div class="login-info">
         <img class="img" src="/static/broccoli-fruit-green-healthy-vegetable_107405.png">
         <label class="welcome">{{ user_info }}님 환영합니다 </label>
-        <button type="button" class="btn btn-primary" id="login-btn" onclick="window.location.href='/mypage_info'">개인정보수정</button>
-        <button type="button" class="btn btn-primary" id="login-btn" onclick="window.location.href='/wishlist'">찜목록</button>
+        <button type="button" class="btn btn-primary" id="update-btn" onclick="window.location.href='/mypage_info'">개인정보수정</button>
+        <button type="button" class="btn btn-primary" id="wishlist-btn" onclick="window.location.href='/wishlist'">찜목록</button>
         <button type="button" class="btn btn-info" onclick="logout()">로그아웃</button>
     </div>
 

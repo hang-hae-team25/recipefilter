@@ -1,17 +1,17 @@
-{%with messages = get_flashed_messages()%}
-  {%if messages %}
-    <script type="text/javascript">
-      alert("{{messages[-1]}}");
-    </script>
-    {%endif%}
-  {%endwith%}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script type="text/javascript">
+            alert("{{messages[-1]}}");
+        </script>
+    {% endif %}
+{% endwith %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>이건 못 먹지</title>
 
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -21,57 +21,42 @@
     </script>
 
     <style>
-     .main-contnent {
-         width: 1400px;
-         align-items: center;
-         margin: auto;
-         padding: 10px 10px 10px 10px;
+        .main-contnent {
+            width: 1400px;
+            align-items: center;
+            margin: auto;
+            padding: 10px 10px 10px 10px;
         }
-     .subtitle {
-        width: 1400px;
-        font-weight: 600;
-        font-size: xxx-large;
-        text-align: center;
-        margin-top: 50px;
-     }
 
-    .sidebar {
-         background-color: darkseagreen;
-         width: 200px;
-         height: 150px;
-         margin-top: 100px;
-         margin-right: 10px;
-         border-radius: 0.25rem;
-     }
+        .subtitle {
+            width: 1400px;
+            font-weight: 600;
+            font-size: xxx-large;
+            text-align: center;
+            margin-top: 30px;
+            padding-bottom: 50px;
+        }
 
-     .nav-link {
-         display: block;
-         font-weight: bold;
-         font-size: large;
-         color: white;
-         text-align: center;
-         margin-top: 20px;
-         vertical-align: center;
-     }
+        .card-columns {
+            width: 900px;
+            margin: auto;
+        }
 
-     .card-columns {
-         width: 900px;
-         margin-left: 300px;
-     }
-     #main-btn {
-         display: block;
-         background-color: coral;
-         border: coral;
-         margin: auto;
-         margin-top: 40px;
-         margin-bottom: 40px;
-         align-content:center;
+        #main-btn {
+            display: block;
+            background-color: coral;
+            border: coral;
+            margin: auto;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            align-content: center;
 
-     }
-      .section {
+        }
+
+        .section {
             max-width: 1400px;
             margin: auto;
-            padding-top: 50px;
+            padding-top: 20px;
             position: relative;
             background-color: mediumseagreen;
             border-radius: 0.5rem;
@@ -98,11 +83,11 @@
                         let ingredient = recipes[i]['ingredient']
                         let category = recipes[i]['category']
 
-                        let temp_html = ` <div class="card" style="box-shadow: 3px 3px 5px grey; border: grey solid;border-radius: 10px;" >
+                        let temp_html = ` <div class="card" property="height:750px" style="box-shadow: 3px 3px 5px grey; border: grey solid;border-radius: 10px;" >
                                                 <img class="card-img-top"
                                                      src=${image}
                                                      alt="Card image cap">
-                                                <div class="card-body" style="overflow: scroll; text-overflow: fade; white-space: normal;">
+                                                <div class="card-body" style="overflow: scroll; text-overflow: fade; white-space: normal;height: 310px;">
                                                     <a href=${hyperlink} class="card-title"><span style="font-weight:bold"> 레시피 이름: </span>${title}</a>
                                                     <p class="card-text"><span style="font-weight:bold"> 레시피 재료: </span> ${ingredient} </p>
                                                     <p class="card-text"><span style="font-weight:bold"> 레시피 분류 : </span>${category} </p>
@@ -126,13 +111,13 @@
 
 <div class="main-contnent">
     <label class="subtitle">찜목록</label>
-        <section class="section">
+    <section class="section">
         <button type="button" class="btn btn-primary" id="main-btn" onclick="window.location.href='/'">메인페이지로</button>
 
-        <div class="card-columns" id="cards-box" property="width:33%">
+        <div class="card-columns" id="cards-box"  style="display: grid; grid-template-columns: 1fr 1fr 1fr">
 
         </div>
-        </section>
+    </section>
 
 </div>
 

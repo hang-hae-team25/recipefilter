@@ -41,32 +41,12 @@
             font-size: xxx-large;
             text-align: center;
             margin-top: 50px;
-        }
-
-        .sidebar {
-            background-color: darkseagreen;
-            width: 200px;
-            height: 150px;
-            margin-top: 50px;
-            margin-right: 10px;
-            margin-left: 20px;
-            border-radius: 0.25rem;
-            position: absolute;
-            z-index: 1;
-        }
-
-        .nav-link {
-            display: block;
-            font-weight: bold;
-            font-size: large;
-            color: white;
-            text-align: center;
-            margin-top: 20px;
-            vertical-align: center;
+            padding-bottom: 30px;
         }
 
         .section {
             max-width: 1400px;
+            min-height: 740px;
             margin: auto;
             padding-top: 50px;
             position: relative;
@@ -118,7 +98,7 @@
                 min-height: 150px;
         }
 
-        #update-btn {
+        #confirm-update-btn {
             display: block;
             margin: auto;
             border-radius: 0.25rem;
@@ -306,7 +286,7 @@
                     </div>
                     <div id="div-sign-in-or-up" class="has-text-centered">
                         <nav class="level is-mobile">
-                            <button class="level-item button is-sparta" id="update-btn" onclick="update_info()">수정하기</button>
+                            <button class="level-item button is-sparta" id="confirm-update-btn" onclick="update_info()">수정하기</button>
 
                         </nav>
                         <hr>
