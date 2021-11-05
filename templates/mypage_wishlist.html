@@ -98,11 +98,11 @@
                         let ingredient = recipes[i]['ingredient']
                         let category = recipes[i]['category']
 
-                        let temp_html = ` <div class="card" property="height:750px" style="box-shadow: 3px 3px 5px grey; border: grey solid;border-radius: 10px;" >
+                        let temp_html = ` <div class="card" style="box-shadow: 3px 3px 5px grey; border: grey solid;border-radius: 10px;" >
                                                 <img class="card-img-top"
                                                      src=${image}
                                                      alt="Card image cap">
-                                                <div class="card-body" style="overflow: scroll; text-overflow: fade; white-space: normal;height: 310px;">
+                                                <div class="card-body" style="overflow: scroll; text-overflow: fade; white-space: normal;">
                                                     <a href=${hyperlink} class="card-title"><span style="font-weight:bold"> 레시피 이름: </span>${title}</a>
                                                     <p class="card-text"><span style="font-weight:bold"> 레시피 재료: </span> ${ingredient} </p>
                                                     <p class="card-text"><span style="font-weight:bold"> 레시피 분류 : </span>${category} </p>
@@ -129,7 +129,7 @@
         <section class="section">
         <button type="button" class="btn btn-primary" id="main-btn" onclick="window.location.href='/'">메인페이지로</button>
 
-        <div class="card-columns" id="cards-box">
+        <div class="card-columns" id="cards-box" property="width:33%">
 
         </div>
         </section>
