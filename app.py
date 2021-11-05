@@ -1,3 +1,4 @@
+# -- coding: utf-8 --
 from pymongo import MongoClient
 import jwt
 import datetime
@@ -188,7 +189,9 @@ def filter_recipes(keyword):
 def mywish():
     token_receive = request.cookies.get('mytoken')
     if token_receive is not None:
-        return render_template("mypage_wishlist.html")
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_id = payload["id"]
+        return render_template("mypage_wishlist.html",user_info=user_id)
     else:
         return render_template('login.html')
 
@@ -200,10 +203,10 @@ def wishplus():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_id =payload["id"]
         title = request.args.get('title')
+        print(title)
         mywish_ing = list(db.myrecipe.find({'title': title}, {'_id': False}))
         wishIdlist = []
         for ing in mywish_ing:
-
             wishIdlist.append(ing['user_id'])
 
         if mywish_ing:
@@ -212,12 +215,14 @@ def wishplus():
             else:
                 recipe = db.dbrecipefilter.find_one({'title': title}, {'_id': False})
                 recipe['user_id'] =user_id
+                #print(recipe)
                 db.myrecipe.insert_one(recipe)
                 flash("찜완료!")
         else:
             recipe = db.dbrecipefilter.find_one({'title': title}, {'_id': False})
             print(recipe)
             recipe['user_id'] = user_id
+            # print(recipe)
             db.myrecipe.insert_one(recipe)
             flash("찜완료!")
         return redirect("/")
