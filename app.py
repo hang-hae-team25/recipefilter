@@ -90,14 +90,21 @@ def check_dup():
     return jsonify({'result': 'success', 'exists': exists})
 
 
+#요청한 데이터를 상황에 맞게 필터링해서 보내주는 helping function 입니다.
 def view_recipes_help(filterKeyword, recipes, parsedRecipes):
 
+    # DB의 전체 레시피 데이터를 for loop으로 조회
     for i in range(0, len(recipes)):
         output = {'title': recipes[i]['title'], 'hyperlink': recipes[i]['hyperlink'], 'image': recipes[i]['image']}
+
+        # description이 없는 경우도 있어서 확인하는 유효성 검사
         if 'description' in recipes[i]:
             output['description'] = recipes[i]['description']
         ingredients = []
         category = []
+
+        # category가 1 ~ 5까지 해물, 고기, 유제품, 탄수화물, 채소류로 나뉘어 있는데
+        # 어떤 카테고리에 포함된 레시피 데이터인지 확인
         for j in range(0, 5):
             key = 'category' + str(j + 1)
             if key in recipes[i]:
@@ -106,6 +113,8 @@ def view_recipes_help(filterKeyword, recipes, parsedRecipes):
         for j in range(0, len(category)):
             categorys += category[j] + ' '
 
+        # 재료는 레시피 별로 몇개가 들어 있는지 알수 없어서 무한루프로 확인후
+        # 키가 없다고 나올때 멈추게 했습니다.
         ingreIndex = 1
         while True:
             key = 'ingredient' + str(ingreIndex)
@@ -121,14 +130,20 @@ def view_recipes_help(filterKeyword, recipes, parsedRecipes):
 
         output['ingredient'] = allIngredients
         output['category'] = categorys
+
+        # filter 카테고리를 받아서 레시피가 해당 카테고리에 포함되면
+        # key값으로 표시를 해서 넣어준다.
         if len(filterKeyword) > 0:
             for keyword in filterKeyword:
                 if keyword in recipes[i]:
                     output['filter'] = 'Y'
                     break;
+
+        # parsedRecipe에 넣어 주면 다른 API 함수에서 client 에 전송해준다
         parsedRecipes.append(output)
 
 
+# DB에 들어있는 모든 데이터를 메인 화면에 뿌려주는 API
 @app.route('/recipes', methods=['GET'])
 def view_recipes():
     recipes = list(db.dbrecipefilter.find({}, {'_id': False}))
@@ -137,6 +152,7 @@ def view_recipes():
     token_receive = request.cookies.get('mytoken')
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
     user_info = db.users.find_one({"username": payload["id"]})
+    # 크롤링한 데이터에 카테고리가 포함이 되지 않아 카테고리를 다섯개로 지정
     keyword = []
     if user_info['meat'] == '육류':
         keyword.append('category1')
@@ -153,11 +169,15 @@ def view_recipes():
     return jsonify({'recipes': parsedRecipes})
 
 
+#검색바에 검색한 키워드를 DB데이터와 비교해 응답해주는 API
 @app.route('/search/<keyword>', methods=['GET'])
 def search_recipes(keyword):
     recipes = list(db.dbrecipefilter.find({}, {'_id': False}))
     searchedRecipe = []
     parsedRecipe = []
+
+    #DB의 모든 레시피 마다의 재료들을 키워드와 비교하여 키워드가 포함되었으면
+    #찾은 레시피 데이터를 따로 분류한다.
     for i in range(0, len(recipes)):
         ingreIndex = 1
         while True:
@@ -172,10 +192,10 @@ def search_recipes(keyword):
     view_recipes_help([], searchedRecipe, parsedRecipe)
     return jsonify({'recipes': parsedRecipe})
 
-
+# 카테고리 버튼을 나눠서 선택한 재료가 포함된 레시피를 보내주는 API
 @app.route('/filter/<keyword>', methods=['POST'])
 def filter_recipes(keyword):
-    # category_receive = request.form['category_give']
+
     recipes = list(db.dbrecipefilter.find({}, {'_id': False}))
     parsedRecipes = []
     keylist = []
