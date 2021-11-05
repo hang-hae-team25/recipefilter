@@ -122,9 +122,11 @@
 
         // 못 먹는 음식선택
         function openClose() {
+            // 못 먹는 음식 선택 박스 닫음
             if ($('#exclude-food-box').css('display') == 'block') {
                 $('#exclude-food-box').hide();
                 $('#open-check-btn').text('못 먹는 음식 선택');
+            // 못 먹는 음식 선택 박스 오픈
             } else {
                 $('#exclude-food-box').show();
                 $('#open-check-btn').text('못 먹는 음식 닫기');
@@ -137,15 +139,15 @@
             let password2 = $("#input-password2").val()
             let nickname = $("#input-nickname").val()
 
-            console.log(password, password2, nickname)
-
-
+            // 못 먹는 음식 체크리스트
             let chk_arr = $("input[name='food-option']");
             let chk_data = [];
             for (let i = 0; i < chk_arr.length; i++) {
+                // 체크 상태일 경우 value 값 넣음
                 if (chk_arr[i].checked == true) {
                     chk_data.push(chk_arr[i].value);
                     console.log(chk_data)
+                // 미체크 상태일 경우 null 값 넣음
                 } else if (chk_arr[i].checked == false) {
                     chk_data.push(chk_arr[i].value = '');
                 }
@@ -156,31 +158,34 @@
             let vegetable = chk_data[2]
             let grain = chk_data[3]
             let dairy = chk_data[4]
-            console.log('선택된 옵션: ' + meat, seafood, vegetable, grain, dairy)
+            // console.log('선택된 옵션: ' + meat, seafood, vegetable, grain, dairy)
 
-
-
-
+            // 비밀번호 입력칸이 공백일 경우
             if (password == "") {
                 $("#help-password").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
                 $("#input-password").focus()
                 return;
+            // 비밀번호 입력 형식이 맞지 않을 경우
             } else if (!is_password(password)) {
                 $("#help-password").text("비밀번호의 형식을 확인해주세요. 영문과 숫자 필수 포함, 특수문자(!@#$%^&*) 사용가능 8-20자").removeClass("is-safe").addClass("is-danger")
                 $("#input-password").focus()
                 return
+            // 사용 가능한 비밀번호일 경우
             } else {
                 $("#help-password").text("사용할 수 있는 비밀번호입니다.").removeClass("is-danger").addClass("is-success")
             }
+            // 비밀번호 확인 입력칸이 공백일 경우
             if (password2 == "") {
                 $("#help-password2").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
                 $("#input-password2").focus()
                 return;
+            // 비밀번호 확인 입력 형식이 맞지 않을 경우
             } else if (password2 != password) {
                 $("#help-password2").text("비밀번호가 일치하지 않습니다.").removeClass("is-safe").addClass("is-danger")
                 $("#input-password2").focus()
                 return;
             } else {
+            // 비밀번호와 비밀번호 확인 정보가 일치하는 경우
                 $("#help-password2").text("비밀번호가 일치합니다.").removeClass("is-danger").addClass("is-success")
             }
 
@@ -199,6 +204,7 @@
                 },
                 success: function (response) {
                     if (response["result"] == "success")
+                        // 개인정보 수정 완료 alert
                         alert(response['msg'])
                         window.location.reload()
                 }

@@ -96,9 +96,11 @@
 
             // 못 먹는 음식 선택
             function openClose() {
+                // 못 먹는 음식 선택 박스 닫음
                 if ($('#exclude-food-box').css('display') == 'block') {
                     $('#exclude-food-box').hide();
                     $('#open-check-btn').text('못 먹는 음식 선택');
+                // 못 먹는 음식 선택 박스 오픈
                 } else {
                     $('#exclude-food-box').show();
                     $('#open-check-btn').text('못 먹는 음식 닫기');
@@ -114,8 +116,8 @@
             function sign_in() {
                 let username = $("#input-username").val()
                 let password = $("#input-password").val()
-                console.log(username, password)
 
+                // 아이디가 공백일 경우
                 if (username == "") {
                     $("#help-id-login").text("아이디를 입력해주세요.")
                     $("#input-username").focus()
@@ -123,7 +125,7 @@
                 } else {
                     $("#help-id-login").text("")
                 }
-
+                // 비밀번호가 공백일 경우
                 if (password == "") {
                     $("#help-password-login").text("비밀번호를 입력해주세요.")
                     $("#input-password").focus()
@@ -156,15 +158,17 @@
                 let password2 = $("#input-password2").val()
                 let nickname = $("#input-nickname").val()
 
-                console.log(username, password, password2, nickname)
-
+               // console.log(username, password, password2, nickname)
 
                 let chk_arr = $("input[name='food-option']");
                 let chk_data = [];
+                // 못 먹는 음식 체크리스트
                 for (let i = 0; i < chk_arr.length; i++) {
+                    // 체크 상태일 경우 value 값 넣음
                     if (chk_arr[i].checked == true) {
                         chk_data.push(chk_arr[i].value);
-                        console.log(chk_data)
+                        //console.log(chk_data)
+                    // 미체크 상태일 경우 null 값 넣음
                     } else if (chk_arr[i].checked == false) {
                         chk_data.push(chk_arr[i].value = '');
                     }
@@ -175,32 +179,37 @@
                 let vegetable = chk_data[2]
                 let grain = chk_data[3]
                 let dairy = chk_data[4]
-                console.log('선택된 옵션: ' + meat, seafood, vegetable, grain, dairy)
+                //console.log('선택된 옵션: ' + meat, seafood, vegetable, grain, dairy)
 
 
                   if ($("#help-id").hasClass("is-danger")) {
                     alert("아이디를 다시 확인해주세요.")
                     return;
+                // 중복확인을 하지 않은 경우
                 } else if (!$("#help-id").hasClass("is-success")) {
                     alert("아이디 중복확인을 해주세요.")
                     return;
                 }
-
+                // 비밀번호 입력칸이 공백일 경우
                 if (password == "") {
                     $("#help-password").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
                     $("#input-password").focus()
                     return;
+                // 비밀번호 입력 형식이 맞지 않을 경우
                 } else if (!is_password(password)) {
                     $("#help-password").text("비밀번호의 형식을 확인해주세요. 영문과 숫자 필수 포함, 특수문자(!@#$%^&*) 사용가능 8-20자").removeClass("is-safe").addClass("is-danger")
                     $("#input-password").focus()
                     return
+                // 사용 가능한 비밀번호일 경우
                 } else {
                     $("#help-password").text("사용할 수 있는 비밀번호입니다.").removeClass("is-danger").addClass("is-success")
                 }
+                // 비밀번호 확인 입력칸이 공백일 경우
                 if (password2 == "") {
                     $("#help-password2").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
                     $("#input-password2").focus()
                     return;
+                // 비밀번호 확인 입력 형식이 맞지 않을 경우
                 } else if (password2 != password) {
                     $("#help-password2").text("비밀번호가 일치하지 않습니다.").removeClass("is-safe").addClass("is-danger")
                     $("#input-password2").focus()
@@ -224,6 +233,7 @@
                         dairy_give: dairy
                     },
                     success: function (response) {
+                        // 회원가입 성공 alert
                         alert("회원가입을 축하드립니다!")
                         window.location.replace("/login")
                     }
@@ -258,17 +268,17 @@
             // 중복체크
             function check_dup() {
                 let username = $("#input-username").val()
-                console.log(username)
+                //console.log(username)
                 if (username == "") {
                     $("#help-id").text("아이디를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
                     $("#input-username").focus()
-                    console.log('username == "": ' + username)
+                    //console.log('username == "": ' + username)
                     return;
                 }
                 if (!is_username(username)) {
                     $("#help-id").text("아이디의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능. 2-10자 길이").removeClass("is-safe").addClass("is-danger")
                     $("#input-username").focus()
-                    console.log('!is_username(username): ' + username)
+                    //console.log('!is_username(username): ' + username)
                     return;
                 }
                 $("#help-id").addClass("is-loading")

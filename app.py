@@ -35,10 +35,9 @@ def login():
     msg = request.args.get("msg")
     return render_template('login.html', msg=msg)
 
-
+# 로그인
 @app.route('/sign_in', methods=['POST'])
 def sign_in():
-    # 로그인
     username_receive = request.form['username_give']
     password_receive = request.form['password_give']
 
@@ -57,7 +56,7 @@ def sign_in():
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
-
+# 회원가입
 @app.route('/sign_up/save', methods=['POST'])
 def sign_up():
     username_receive = request.form['username_give']
@@ -79,10 +78,11 @@ def sign_up():
         "grain": grain_receive,  # 곡류
         "dairy": dairy_receive,  # 유제품
     }
+    # 회원정보 등록처리
     db.users.insert_one(doc)
     return jsonify({'result': 'success'})
 
-
+# 중복체크
 @app.route('/sign_up/check_dup', methods=['POST'])
 def check_dup():
     username_receive = request.form['username_give']
@@ -318,7 +318,7 @@ def update_info():
             "grain": grain_receive,  # 곡류
             "dairy": dairy_receive,  # 유제품
         }
-
+        # 개인정보 수정처리
         db.users.update_one({'username': payload['id']}, {'$set': revised_doc})
         # print(user_info) 토큰으로 받아온 값 확인
         return jsonify({"result": "success", 'msg': '개인정보 수정완료!'})
