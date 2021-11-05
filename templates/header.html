@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>이건 못 먹지 header</title>
-
-     <!-- Bootstrap CSS -->
+    <meta property="og:title" content="이건 못 먹지"/>
+    <meta property="og:description" content="항해99 4기 첫번째 미니 프로젝트 - 25조(고성범, 배은지, 이도연)"/>
+    <meta property="og:image" content="{{ url_for('static', filename='og.png') }}"/>
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -12,57 +14,65 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
-     <!-- Font -->
+    <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
 
     <style>
-     * {
+        * {
             font-family: 'Noto Sans KR', sans-serif;
         }
-    .header{
-        width: 1400px;
-        align-items: center;
-        margin: auto;
-        padding: 10px 10px 10px 10px;
-    }
 
-    .login-info {
-        padding-top: 20px;
-        text-align: right;
-    }
-    .login-info .img {
-        width: 80px;
-        text-align: left;
-    }
-    .welcome {
-        margin-right: 20px;
-        margin-top: 5px;
-        font-weight: bold;
-        font-size: large;
-    }
-    .btn {
-        height: 32px;
-        padding: 0px 5px 0px 5px;
-    }
-    .btn-primary {
-        background-color: darkgreen;
-        border: darkgreen;
-    }
-    .btn-info {
-        background-color: slategray;
-        border: slategray;
-    }
-    #update-btn {
-        margin-right: 10px;
-    }
-    #wishlist-btn {
-        background-color: purple;
-        border: purple;
-        margin-right: 10px;
-    }
+        .header {
+            width: 1400px;
+            align-items: center;
+            margin: auto;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .login-info {
+            padding-top: 20px;
+            text-align: right;
+        }
+
+        .login-info .img {
+            width: 80px;
+            text-align: left;
+        }
+
+        .welcome {
+            margin-right: 20px;
+            margin-top: 5px;
+            font-weight: bold;
+            font-size: large;
+        }
+
+        .btn {
+            height: 32px;
+            padding: 0px 5px 0px 5px;
+        }
+
+        .btn-primary {
+            background-color: darkgreen;
+            border: darkgreen;
+        }
+
+        .btn-info {
+            background-color: slategray;
+            border: slategray;
+        }
+
+        #update-btn {
+            margin-right: 10px;
+        }
+
+        #wishlist-btn {
+            background-color: purple;
+            border: purple;
+            margin-right: 10px;
+        }
 
     </style>
 
@@ -71,7 +81,7 @@
         function logout() {
             console.log('로그아웃 클릭')
             $.removeCookie('mytoken', {path: '/'});
-            window.location.href="/login"
+            window.location.href = "/login"
         }
     </script>
 
@@ -82,8 +92,11 @@
     <div class="login-info">
         <img class="img" src="/static/broccoli-fruit-green-healthy-vegetable_107405.png">
         <label class="welcome">{{ user_info }}님 환영합니다 </label>
-        <button type="button" class="btn btn-primary" id="update-btn" onclick="window.location.href='/mypage_info'">개인정보수정</button>
-        <button type="button" class="btn btn-primary" id="wishlist-btn" onclick="window.location.href='/wishlist'">찜목록</button>
+        <button type="button" class="btn btn-primary" id="update-btn" onclick="window.location.href='/mypage_info'">
+            개인정보수정
+        </button>
+        <button type="button" class="btn btn-primary" id="wishlist-btn" onclick="window.location.href='/wishlist'">찜목록
+        </button>
         <button type="button" class="btn btn-info" onclick="logout()">로그아웃</button>
     </div>
 
