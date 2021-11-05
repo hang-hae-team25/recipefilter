@@ -38,9 +38,10 @@
                 let hyperlink = recipes[i]['hyperlink']
                 let image = recipes[i]['image']
                 let description = recipes[i]['description']
+                if(typeof description == 'undefined')
+                    description = '설명 없음'
                 let ingredient = recipes[i]['ingredient']
                 let category = recipes[i]['category']
-                let button_change = ``
                 let temp_html = ` <div class="card" property="height:800px" style="border: darkblue solid; border-radius: 10px;" >
                                                 <img class="card-img-top" style="width: 447px;"
                                                      src=${image}
@@ -53,7 +54,6 @@
                                                     <button type="button" class="btn btn-primary" id="login-btn"  onclick="window.location.href='/wishlistplus?title=${title}'">찜하기</button>
                                                 </div>
                                             </div>`
-
                 let filtered_temp_html = ` <div class="card" property="height:800px" style="border: darkblue solid; border-radius: 10px;">
                                                 <img class="card-img-top"
                                                      src="/static/filter_image(ghost).png" style="width: 447px;"
