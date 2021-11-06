@@ -142,7 +142,7 @@ def view_recipes_help(filterKeyword, recipes, parsedRecipes):
         # parsedRecipe에 넣어 주면 다른 API 함수에서 client 에 전송해준다
         parsedRecipes.append(output)
 
-
+#code block #1
 # DB에 들어있는 모든 데이터를 메인 화면에 뿌려주는 API
 @app.route('/recipes', methods=['GET'])
 def view_recipes():
@@ -216,6 +216,7 @@ def mywish():
     else:
         return render_template('login.html')
 
+#code block #1
 #찜하기
 @app.route('/wishlistplus', methods=['GET'])
 def wishplus():
