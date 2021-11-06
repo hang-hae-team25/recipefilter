@@ -204,9 +204,10 @@ def filter_recipes(keyword):
 
     return jsonify({'recipes': parsedRecipes})
 
-
+#찜목록가기
 @app.route('/wishlist')
 def mywish():
+    #토큰확인 후 없으면 login으로
     token_receive = request.cookies.get('mytoken')
     if token_receive is not None:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
@@ -215,29 +216,36 @@ def mywish():
     else:
         return render_template('login.html')
 
-
+#찜하기
 @app.route('/wishlistplus', methods=['GET'])
 def wishplus():
+    #로그인 중인지 확인
     token_receive = request.cookies.get('mytoken')
+    #로그인 중이면
     if token_receive is not None:
+        #아이디를 playload에서 빼온다
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_id =payload["id"]
+        #html에서 전달된 title로 db에서 find
+
         title = request.args.get('title')
         print(title)
         mywish_ing = list(db.myrecipe.find({'title': title}, {'_id': False}))
         wishIdlist = []
         for ing in mywish_ing:
             wishIdlist.append(ing['user_id'])
-
         if mywish_ing:
+            # 로그인된 아이디가 이미 찜에 추가한 경우
             if user_id in wishIdlist:
                 flash("이미 추가된 레시피입니다.")
+            #다른 사용자가 찜에 추가해놓은 경우
             else:
                 recipe = db.dbrecipefilter.find_one({'title': title}, {'_id': False})
                 recipe['user_id'] =user_id
                 #print(recipe)
                 db.myrecipe.insert_one(recipe)
                 flash("찜완료!")
+        # mywish_ing가 빈 리스트이면->db.myrecipe에 넣기
         else:
             recipe = db.dbrecipefilter.find_one({'title': title}, {'_id': False})
             print(recipe)
@@ -250,25 +258,28 @@ def wishplus():
         flash("로그인해주세요!")
         return render_template("login.html")
 
+#찜목록에서 삭제
 @app.route('/wishlistminus', methods=['GET'])
 def wishminus():
     title = request.args.get('title')
     db.myrecipe.delete_one({'title':title})
     flash("찜삭제 완료!")
     return redirect("/wishlist")
-
+#찜목록페이지에 myrecipe데이터 뿌리기
 @app.route('/myrecipeview', methods=['GET'])
 def my_recipe_view():
     token_receive = request.cookies.get('mytoken')
-
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    #db에서 레시피 찾기
     recipes = list(db.myrecipe.find({'user_id':payload["id"]}, {'_id': False}))
     parsedRecipes = []
     for i in range(0, len(recipes)):
         output = {'title': recipes[i]['title'], 'hyperlink': recipes[i]['hyperlink'], 'image': recipes[i]['image']}
+        #description이 있는지
         if 'description' in recipes[i]:
             output['description'] = recipes[i]['description']
         ingredients = []
+        #어느 category에 포함되는지
         category = []
         for j in range(0, 5):
             key = 'category' + str(j)
@@ -277,7 +288,7 @@ def my_recipe_view():
         categorys = ''
         for j in range(0, len(category)):
             categorys += category[j] + ' '
-
+        #재료는 몇개인지 모름으로key값이 없을 때까지 무한루프
         ingreIndex = 1
         while True:
             key = 'ingredient' + str(ingreIndex)
