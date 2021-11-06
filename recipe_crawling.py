@@ -9,6 +9,7 @@ headers = {
 
 ingreSet = set()
 
+# 만개의 레시피 3페이지 까지 크롤링
 for i in range(0, 3):
     index = i + 1
     url = f'https://www.10000recipe.com/recipe/list.html?order=reco&page={index}'
@@ -23,9 +24,12 @@ for i in range(0, 3):
     print()
     print(f'page: {index}')
 
+    #페이지 마다 있는 레시피의 수 만큼 다시 for loop
+    # 하나씩페이지에 들어가서 상세정보 크롤링
     for i in range(0, len(trsImg)):
         title = trsText[i].text
         specialChars = "'-#$%^&*()/"
+        # description에 있는 특수 문자를 공백을 대체
         for specialChar in specialChars:
             title = title.replace(specialChar, ' ').rstrip()
         hlk = trsHlk[i]['href']
@@ -136,6 +140,7 @@ for i in range(0, 3):
                    '대파 잎', '송송 썬 쪽파',
                    '오이고추', '송이버섯', '미니새송이버섯', '데쳐서 물기짠 봄동', '속배추', '표고버섯', '다진 대파', '다진양파', '다진 쪽파', '파프리카', '배추',
                    '노랑파프리카', '오이', '쪽파', '대파 다진거', '양송이버섯', '시금치'}
+        # 재료가 하나라도 있다면 카테고리를 생성해서 추가
         if len(trsDetail) != 0:
             i = 1
             for elem in trsDetail:
